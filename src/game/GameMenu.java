@@ -1,43 +1,42 @@
 package game;
 
-import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class GameMenu extends JPanel {
     private GameWindow gameWindow;
     private JComboBox<String> difficultyCombo;
-    private BufferedImage gameImage;
+    private Icon gifIcon;
+    private Clip musicClip;
 
     public GameMenu(GameWindow window) {
         this.gameWindow = window;
         setLayout(new BorderLayout(0, 0));
         setBackground(new Color(240, 240, 240));
 
-        // Load image
+        // Load animated GIF
         try {
-            gameImage = ImageIO.read(new File("resources/game.jpg"));
-        } catch (IOException e) {
+            gifIcon = new ImageIcon(new ImageIcon("resources/khunglong.gif").getImage()
+                .getScaledInstance(800, 300, Image.SCALE_DEFAULT));
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Single panel for full image
+        // Single panel for full image with custom size
         JPanel mainPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                if (gameImage != null) {
-                    g.drawImage(gameImage, 0, 0, getWidth(), getHeight(), null);
+                if (gifIcon != null) {
+                    // Center the gif if panel is larger
+                    int x = (getWidth() - gifIcon.getIconWidth()) / 2;
+                    int y = (getHeight() - gifIcon.getIconHeight()) / 2;
+                    gifIcon.paintIcon(this, g, x, y);
                 }
             }
         };
+        mainPanel.setPreferredSize(new Dimension(800, 300));
         mainPanel.setLayout(new BorderLayout());
 
         // Control panel (semi-transparent) at bottom
@@ -81,6 +80,7 @@ public class GameMenu extends JPanel {
 
         // Add main panel to frame
         add(mainPanel, BorderLayout.CENTER);
+
     }
 
 

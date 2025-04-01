@@ -16,7 +16,7 @@ public class GameWindow extends JFrame {
         
         // Set window icon
         try {
-            ImageIcon icon = new ImageIcon("resources/khunglong.png");
+            ImageIcon icon = new ImageIcon("resources/game.png");
             setIconImage(icon.getImage());
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,6 +35,7 @@ public class GameWindow extends JFrame {
     }
 
     public void startGame(int difficulty) {
+       
         if (gamePanel != null) {
             mainPanel.remove(gamePanel);
             if (gamePanel.gameTimer != null) {
